@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">机器人后台管理系统</h3>
+      <h3 class="title">若依后台管理系统</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { getCodeImg } from "@/api/login";
+import {getCodeImg, getRegisterApi} from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
 import useUserStore from '@/store/modules/user'
@@ -98,7 +98,7 @@ const register = ref(false);
 const redirect = ref(undefined);
 
 watch(route, (newRoute) => {
-    redirect.value = newRoute.query && newRoute.query.redirect;
+  redirect.value = newRoute.query && newRoute.query.redirect;
 }, { immediate: true });
 
 function handleLogin() {
@@ -147,6 +147,12 @@ function getCode() {
   });
 }
 
+function getRegister() {
+  getRegisterApi().then(res => {
+    register.value = res.data.canRegister;
+  });
+}
+
 function getCookie() {
   const username = Cookies.get("username");
   const password = Cookies.get("password");
@@ -158,8 +164,12 @@ function getCookie() {
   };
 }
 
-getCode();
-getCookie();
+// 生命周期中绘制页面完毕之后可以执行的钩子函数
+onMounted(() => {
+  getCode();
+  getCookie();
+  getRegister();
+});
 </script>
 
 <style lang='scss' scoped>

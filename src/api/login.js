@@ -58,3 +58,15 @@ export function getCodeImg() {
     timeout: 20000
   })
 }
+
+// 获取验证码
+export function getRegisterApi() {
+  return request({
+    url: '/getRegister',
+    headers: {
+      isToken: false
+    },
+    method: 'get',
+    timeout: 20000
+  })
+}
