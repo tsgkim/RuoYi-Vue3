@@ -91,7 +91,7 @@
               <el-icon><question-filled /></el-icon>
             </el-tooltip>
           </template>
-          <tree-select
+          <tree-select style="width: 100%"
             v-model:value="info.parentMenuId"
             :options="menuOptions"
             :objMap="{ value: 'menuId', label: 'menuName', children: 'children' }"
